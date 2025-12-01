@@ -1,81 +1,38 @@
 package io.codef.api;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+import io.codef.api.auth.EasyCodefTokenManager;
+import io.codef.api.core.EasyCodefExecutor;
+import io.codef.api.dto.EasyCodefRequest;
 import io.codef.api.dto.EasyCodefResponse;
-import io.codef.api.error.EasyCodefError;
-
-import static io.codef.api.constants.CodefPath.CREATE_ACCOUNT;
-import static io.codef.api.util.JsonUtil.mapper;
+import io.codef.api.handler.CodefValidator;
 
 public class EasyCodef {
 
-	private final EasyCodefProperties properties = new EasyCodefProperties();
-    private final EasyCodefTokenManager tokenManager = new EasyCodefTokenManager(properties);
+	private final EasyCodefProperties properties;
+    private final EasyCodefExecutor executor;
 
-	public void setClientInfo(String clientId, String clientSecret) {
-		properties.setClientInfo(clientId, clientSecret);
-	}
+    protected EasyCodef(EasyCodefBuilder builder) {
+        EasyCodefProperties properties = new EasyCodefProperties(builder);
+        EasyCodefTokenManager tokenManager = new EasyCodefTokenManager(properties);
+        EasyCodefExecutor executor = new EasyCodefExecutor(tokenManager);
 
-	public void setClientInfoForDemo(String demoClientId, String demoClientSecret) {
-		properties.setClientInfoForDemo(demoClientId, demoClientSecret);
-	}
-
-	public void setPublicKey(String publicKey) {
-		properties.setPublicKey(publicKey);
-	}
+        this.properties = properties;
+        this.executor = executor;
+    }
 
 	public String getPublicKey() {
 		return properties.getPublicKey();
 	}
 
-	public String requestProduct(String productUrl, EasyCodefServiceType serviceType, Map<String, Object> parameterMap) throws JsonProcessingException {
-        EasyCodefResponse validationError = EasyCodefValidator.validateRequest(properties, serviceType);
-        if (validationError != null) {
-            return mapper().writeValueAsString(validationError);
-        }
+    public EasyCodefResponse requestProduct(EasyCodefRequest request) {
+        CodefValidator.validateTwoWayKeywordsOrThrow(request.getParameterMap());
 
-		if(!EasyCodefValidator.checkTwoWayKeyword(parameterMap)) {
-            EasyCodefResponse response = ResponseHandler.handleErrorResponse(EasyCodefError.INVALID_2WAY_KEYWORD);
-            return mapper().writeValueAsString(response);
-		}
-
-        String accessToken = requestToken(serviceType);
-        String urlPath = serviceType.getServiceType() + productUrl;
-		EasyCodefResponse response = EasyCodefApiClient.requestProduct(urlPath, accessToken, parameterMap);
-
-		return mapper().writeValueAsString(response);
-	}
-
-    public String requestCertification(String productUrl, EasyCodefServiceType serviceType, HashMap<String, Object> parameterMap) throws JsonProcessingException {
-        EasyCodefResponse validationError = EasyCodefValidator.validateRequest(properties, serviceType);
-        if (validationError != null) {
-            return mapper().writeValueAsString(validationError);
-        }
-
-        if (!EasyCodefValidator.checkTwoWayInfo(parameterMap)) {
-            EasyCodefResponse response = ResponseHandler.handleErrorResponse(EasyCodefError.INVALID_2WAY_INFO);
-            return mapper().writeValueAsString(response);
-        }
-
-        String accessToken = requestToken(serviceType);
-        String urlPath = serviceType.getServiceType() + productUrl;
-        EasyCodefResponse response = EasyCodefApiClient.requestProduct(urlPath, accessToken, parameterMap);
-
-        return mapper().writeValueAsString(response);
+        return executor.execute(request.getProductUrl(), properties.getServiceType(), request.getParameterMap());
     }
 
-	public String createAccount(EasyCodefServiceType serviceType, Map<String, Object> parameterMap) throws JsonProcessingException {
-		return requestProduct(CREATE_ACCOUNT, serviceType, parameterMap);
-	}
+    public EasyCodefResponse requestCertification(EasyCodefRequest request) {
+        CodefValidator.validateTwoWayInfoOrThrow(request.getParameterMap());
 
-	public String requestToken(EasyCodefServiceType serviceType) {
-        return tokenManager.getAccessToken(serviceType);
-	}
-
-	public String requestNewToken(EasyCodefServiceType serviceType) {
-        return tokenManager.getNewAccessToken(serviceType);
-	}
+        return executor.execute(request.getProductUrl(), properties.getServiceType(), request.getParameterMap());
+    }
 }

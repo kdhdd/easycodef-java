@@ -1,10 +1,17 @@
 package io.codef.api.http;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
+
 public class HttpRequestBuilder {
+
     private final Map<String, String> headers = new HashMap<>();
+
     private String url;
     private String body;
 
@@ -27,15 +34,15 @@ public class HttpRequestBuilder {
         return this;
     }
 
-    public String getUrl() {
-        return url;
-    }
+    public HttpUriRequest build() {
+        HttpPost httpPost = new HttpPost(url);
 
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
+        headers.forEach(httpPost::setHeader);
 
-    public String getBody() {
-        return body;
+        if (body != null && !body.isEmpty()) {
+            httpPost.setEntity(new StringEntity(body, StandardCharsets.UTF_8));
+        }
+
+        return httpPost;
     }
 }
