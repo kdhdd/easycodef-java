@@ -1,72 +1,69 @@
 package io.codef.api.auth;
 
-import static io.codef.api.constants.CodefConstant.OAuth.*;
+import static io.codef.api.constants.OAuthConstant.*;
 
 import java.time.LocalDateTime;
 
-import io.codef.api.core.EasyCodefApiClient;
 import org.apache.commons.codec.binary.Base64;
 
 import com.alibaba.fastjson2.JSONObject;
 
+import io.codef.api.core.Client;
 import io.codef.api.dto.EasyCodefResponse;
+import io.codef.api.util.AuthorizationUtil;
 
-public class EasyCodefToken {
+public class EasyCodefToken implements Token {
 
-    private final String oauthToken;
+	private final Client client;
+	private final String oauthToken;
 
-    private String accessToken;
-    private LocalDateTime expiresAt;
+	private String accessToken;
+	private LocalDateTime expiresAt;
 
-    EasyCodefToken(String clientId, String clientSecret) {
-        this.oauthToken = createOAuthToken(clientId, clientSecret);
+	public EasyCodefToken(String clientId, String clientSecret, Client client) {
+		this.oauthToken = createOAuthToken(clientId, clientSecret);
+		this.client = client;
 
-        EasyCodefResponse response = EasyCodefApiClient.publishToken(oauthToken);
+		refreshToken();
+	}
 
-        initializeToken(response);
-    }
+	@Override
+	public String getValidAccessToken() {
+		validateAndRefreshToken();
+		return AuthorizationUtil.createBearerAuth(accessToken);
+	}
 
-    EasyCodefToken validateAndRefreshToken() {
-        if (expiresAt == null || isTokenExpiringSoon(expiresAt)) {
-            refreshToken();
-        }
+	private void validateAndRefreshToken() {
+		if (expiresAt == null || isTokenExpiringSoon(expiresAt)) {
+			refreshToken();
+		}
+	}
 
-        return this;
-    }
+	private String createOAuthToken(String clientId, String clientSecret) {
+		String auth = clientId + ":" + clientSecret;
+		byte[] authEncBytes = Base64.encodeBase64(auth.getBytes());
 
-    String getAccessToken() {
-        return accessToken;
-    }
+		return new String(authEncBytes);
+	}
 
-    private String createOAuthToken(String clientId, String clientSecret) {
-        String auth = clientId + ":" + clientSecret;
-        byte[] authEncBytes = Base64.encodeBase64(auth.getBytes());
+	private void refreshToken() {
+		String basicToken = AuthorizationUtil.createBasicAuth(oauthToken);
+		EasyCodefResponse response = client.publishToken(basicToken);
+		JSONObject jsonObject = response.getData(JSONObject.class);
 
-        return new String(authEncBytes);
-    }
+		Object accessToken = jsonObject.get(ACCESS_TOKEN.getValue());
+		Object expiresIn = jsonObject.get(EXPIRES_IN.getValue());
 
-    private void initializeToken(EasyCodefResponse response) {
-        JSONObject jsonObject = response.getData(JSONObject.class);
+		if (accessToken == null || expiresIn == null) {
+			return;
+		}
 
-        Object accessToken = jsonObject.get(ACCESS_TOKEN);
-        Object expiresIn = jsonObject.get(EXPIRES_IN);
+		this.accessToken = String.valueOf(accessToken);
+		this.expiresAt = LocalDateTime.now()
+			.plusSeconds(Integer.parseInt(String.valueOf(expiresIn)));
+	}
 
-        if (accessToken == null || expiresIn == null) {
-            return;
-        }
-
-        this.accessToken = String.valueOf(accessToken);
-        this.expiresAt = LocalDateTime.now()
-                .plusSeconds(Integer.parseInt(String.valueOf(expiresIn)));
-    }
-
-    private boolean isTokenExpiringSoon(LocalDateTime expiry) {
-        return expiry.isBefore(LocalDateTime.now().plusHours(24));
-    }
-
-    private void refreshToken() {
-        EasyCodefResponse response = EasyCodefApiClient.publishToken(oauthToken);
-
-        initializeToken(response);
-    }
+	private boolean isTokenExpiringSoon(LocalDateTime expiry) {
+		return expiry.isBefore(LocalDateTime.now().plusHours(24));
+	}
 }

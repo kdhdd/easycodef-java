@@ -2,22 +2,36 @@ package io.codef.api.core;
 
 import java.util.Map;
 
-import io.codef.api.auth.EasyCodefTokenManager;
+import com.alibaba.fastjson2.JSON;
+
+import io.codef.api.auth.Token;
 import io.codef.api.constants.CodefServiceType;
+import io.codef.api.dto.EasyCodefRequest;
 import io.codef.api.dto.EasyCodefResponse;
 
-public class EasyCodefExecutor {
+public class EasyCodefExecutor implements Executor {
 
-    private final EasyCodefTokenManager tokenManager;
+	private final Token token;
+	private final CodefServiceType codefServiceType;
+	private final Client client;
 
-    public EasyCodefExecutor(EasyCodefTokenManager tokenManager) {
-        this.tokenManager = tokenManager;
-    }
+	public EasyCodefExecutor(Token token, CodefServiceType codefServiceType, Client client) {
+		this.token = token;
+		this.codefServiceType = codefServiceType;
+		this.client = client;
+	}
 
-    public EasyCodefResponse execute(String productUrl, CodefServiceType serviceType, Map<String, Object> parameterMap) {
-        String accessToken = tokenManager.getValidAccessToken();
-        String urlPath = serviceType.getHost() + productUrl;
+	@Override
+	public EasyCodefResponse execute(EasyCodefRequest request) {
+		String urlPath = codefServiceType.getHost() + request.getProductUrl();
 
-        return EasyCodefApiClient.requestProduct(urlPath, accessToken, parameterMap);
-    }
+		String bearerToken = token.getValidAccessToken();
+
+		Map<String, Object> parameterMap = request.getParameterMap();
+		String jsonBody = JSON.toJSONString(parameterMap);
+
+		Integer customTimeout = request.getCustomTimeout();
+
+		return client.requestProduct(urlPath, bearerToken, jsonBody, customTimeout);
+	}
 }
