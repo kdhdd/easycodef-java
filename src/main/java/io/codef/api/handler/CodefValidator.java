@@ -1,7 +1,7 @@
 package io.codef.api.handler;
 
-import static io.codef.api.constants.CodefConstant.*;
-import static io.codef.api.constants.TwoWayConstant.*;
+import static io.codef.api.constant.CodefConstant.*;
+import static io.codef.api.constant.TwoWayConstant.*;
 
 import java.util.Map;
 
@@ -23,9 +23,9 @@ public class CodefValidator {
 		return object;
 	}
 
-	public static String validatePathOrThrow(String productUrl, CodefError codefError) {
+	public static String validatePathOrThrow(String productUrl) {
 		if (productUrl == null || !productUrl.startsWith(PATH_PREFIX.getValue())) {
-			throw CodefException.from(codefError);
+			throw CodefException.from(CodefError.INVALID_PATH_REQUESTED);
 		}
 
 		return productUrl;

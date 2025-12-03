@@ -1,16 +1,13 @@
 package io.codef.api;
 
-import io.codef.api.auth.EasyCodefToken;
-import io.codef.api.auth.Token;
-import io.codef.api.constants.CodefServiceType;
-import io.codef.api.core.Client;
-import io.codef.api.core.EasyCodefClient;
-import io.codef.api.core.EasyCodefExecutor;
-import io.codef.api.core.Executor;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+
+import io.codef.api.constant.CodefServiceType;
 import io.codef.api.error.CodefError;
 import io.codef.api.handler.CodefValidator;
-import io.codef.api.http.CodefHttpClient;
-import io.codef.api.http.HttpClient;
+import io.codef.api.http.ApacheHttpClient;
+import io.codef.api.service.EasyCodefApiService;
+import io.codef.api.service.EasyCodefOAuthService;
 
 public class EasyCodefBuilder {
 
@@ -18,7 +15,7 @@ public class EasyCodefBuilder {
 	private String clientId;
 	private String clientSecret;
 	private String publicKey;
-	private HttpClient httpClient;
+	private ApacheHttpClient httpClient;
 
 	public static EasyCodefBuilder builder() {
 		return new EasyCodefBuilder();
@@ -44,23 +41,25 @@ public class EasyCodefBuilder {
 		return this;
 	}
 
-	public EasyCodefBuilder httpClient(HttpClient httpClient) {
-		this.httpClient = httpClient;
+	public EasyCodefBuilder httpClient(CloseableHttpClient httpClient) {
+		this.httpClient = ApacheHttpClient.from(httpClient);
 		return this;
 	}
 
 	public EasyCodef build() {
 		validateProperties();
 
-		HttpClient httpClient = (this.httpClient == null)
-			? new CodefHttpClient()
+		ApacheHttpClient httpClient = (this.httpClient == null)
+			? ApacheHttpClient.create()
 			: this.httpClient;
 
-		Client client = new EasyCodefClient(httpClient);
-		Token token = new EasyCodefToken(clientId, clientSecret, client);
-		Executor executor = new EasyCodefExecutor(token, serviceType, client);
+		EasyCodefOAuthService oAuthService = new EasyCodefOAuthService(httpClient);
+		EasyCodefApiService apiService = new EasyCodefApiService(httpClient);
 
-		return new EasyCodef(executor, this.publicKey);
+		EasyCodefToken token = new EasyCodefToken(clientId, clientSecret, oAuthService);
+		EasyCodefDispatcher dispatcher = new EasyCodefDispatcher(token, serviceType, apiService);
+
+		return new EasyCodef(dispatcher, publicKey);
 	}
 
 	private void validateProperties() {

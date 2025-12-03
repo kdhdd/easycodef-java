@@ -12,19 +12,26 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 
-public class CodefHttpClient implements HttpClient {
+public class ApacheHttpClient {
 
 	private final CloseableHttpClient client;
 
-	public CodefHttpClient() {
+	private ApacheHttpClient() {
 		this.client = HttpClients.createSystem();
 	}
 
-	public CodefHttpClient(CloseableHttpClient client) {
+	private ApacheHttpClient(CloseableHttpClient client) {
 		this.client = client;
 	}
 
-	@Override
+	public static ApacheHttpClient create() {
+		return new ApacheHttpClient();
+	}
+
+	public static ApacheHttpClient from(CloseableHttpClient client) {
+		return new ApacheHttpClient(client);
+	}
+
 	public String execute(HttpPost request) {
 		try {
 			return client.execute(request, response -> (response.getEntity() == null)
