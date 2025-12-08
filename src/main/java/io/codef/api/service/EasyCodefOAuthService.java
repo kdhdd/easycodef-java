@@ -8,12 +8,22 @@ import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
+/**
+ * CODEF OAuth 토큰 발급 서비스 클래스
+ *
+ */
 public class EasyCodefOAuthService extends EasyCodefService {
 
 	public EasyCodefOAuthService(CodefHttpClient httpClient) {
 		super(httpClient);
 	}
 
+	/**
+	 * 토큰 발급 요청 실행
+	 *
+	 * @param basicToken Client ID와 Secret으로 생성된 Basic 인증 문자열
+	 * @return 발급된 토큰 정보를 포함한 응답 객체
+	 */
 	public EasyCodefResponse requestToken(String basicToken) {
 		CodefHttpRequest request = HttpRequestBuilder.builder()
 			.url(OAUTH_DOMAIN + GET_TOKEN)

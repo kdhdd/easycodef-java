@@ -1,5 +1,9 @@
 package io.codef.api.constant;
 
+/**
+ * CODEF OAuth 인증 응답 처리 필드 키 enum 클래스
+ *
+ */
 public enum OAuthConstant {
 	ACCESS_TOKEN("access_token"),
 	EXPIRES_IN("expires_in");

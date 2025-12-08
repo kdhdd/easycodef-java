@@ -10,8 +10,6 @@ import io.codef.api.service.EasyCodefApiService;
 /**
  * CODEF API 호출에 필요한 값을 변환하고 전달하는 디스패처 클래스
  *
- * @author : kdso10@codef.io
- * @since  : Dec 5, 2025
  */
 public class EasyCodefDispatcher {
 
@@ -22,7 +20,7 @@ public class EasyCodefDispatcher {
 	/**
 	 * EasyCodefDispatcher 생성자
 	 *
-	 * @param token            Access Token 발급 및 갱신 담당 객체
+	 * @param token             Access Token 발급 및 갱신 담당 객체
 	 * @param codefServiceType  데모/정식 서비스 환경
 	 * @param apiService        API 요청 담당 서비스
 	 */

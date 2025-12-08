@@ -5,6 +5,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * CODEF Two-Way 필드 키 enum 클래스
+ *
+ */
 public enum TwoWayConstant {
 	JOB_INDEX("jobIndex"),
 	THREAD_INDEX("threadIndex"),
