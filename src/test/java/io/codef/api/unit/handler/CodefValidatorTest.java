@@ -1,4 +1,4 @@
-package io.codef.api.handler;
+package io.codef.api.unit.handler;
 
 import static io.codef.api.constant.CodefConstant.*;
 import static io.codef.api.constant.TwoWayConstant.*;
@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
+import io.codef.api.handler.CodefValidator;
 
 @DisplayName("[Handler Layer] CodefValidator Test")
 public class CodefValidatorTest {

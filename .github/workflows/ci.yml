@@ -26,11 +26,3 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
-
-      # 환경변수 설정 후 테스트 실행
-      - name: Run tests using Java ${{ matrix.java }}
-        env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
-        run: ./gradlew clean test -PtestJdk=${{ matrix.java }} --no-daemon

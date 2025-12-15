@@ -1,4 +1,4 @@
-package io.codef.api.dto;
+package io.codef.api.unit.dto;
 
 import static io.codef.api.error.CodefError.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import io.codef.api.dto.EasyCodefRequest;
+import io.codef.api.dto.EasyCodefRequestBuilder;
 import io.codef.api.error.CodefException;
 
 @DisplayName("[Dto Layer] EasyCodefRequestBuilder Test")

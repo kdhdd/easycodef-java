@@ -1,4 +1,4 @@
-package io.codef.api.root;
+package io.codef.api.unit.root;
 
 import static io.codef.api.error.CodefError.*;
 import static org.junit.jupiter.api.Assertions.*;

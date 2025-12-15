@@ -1,4 +1,4 @@
-package io.codef.api.util;
+package io.codef.api.unit.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
+import io.codef.api.util.UrlUtil;
 
 @DisplayName("[Util Layer] UrlUtil Test")
 public class UrlUtilTest {

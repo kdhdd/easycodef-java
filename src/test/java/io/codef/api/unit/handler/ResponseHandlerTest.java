@@ -1,4 +1,4 @@
-package io.codef.api.handler;
+package io.codef.api.unit.handler;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.codef.api.dto.EasyCodefResponse;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
+import io.codef.api.handler.ResponseHandler;
 
 @DisplayName("[Handler Layer] ResponseHandler Test")
 public class ResponseHandlerTest {
