@@ -1,0 +1,68 @@
+package io.codef.api;
+
+import io.codef.api.dto.EasyCodefRequest;
+import io.codef.api.dto.EasyCodefResponse;
+import io.codef.api.service.EasyCodefApiService;
+import io.codef.api.util.JsonUtil;
+
+/**
+ * CODEF API 호출에 필요한 값을 변환하고 전달하는 디스패처 클래스
+ *
+ */
+public class EasyCodefDispatcher {
+
+	private final EasyCodefToken token;
+	private final EasyCodefServiceType easyCodefServiceType;
+	private final EasyCodefApiService apiService;
+
+	/**
+	 * EasyCodefDispatcher 생성자
+	 *
+	 * @param token             Access Token 발급 및 갱신 담당 객체
+	 * @param easyCodefServiceType  데모/정식 서비스 환경
+	 * @param apiService        API 요청 담당 서비스
+	 */
+	EasyCodefDispatcher(EasyCodefToken token, EasyCodefServiceType easyCodefServiceType,
+		EasyCodefApiService apiService) {
+		this.token = token;
+		this.easyCodefServiceType = easyCodefServiceType;
+		this.apiService = apiService;
+	}
+
+	/**
+	 * 요청 객체를 CODEF API 호출에 필요한 형태로 변환하여 전송
+	 *
+	 * <p>
+	 *     호출 URL 생성, 유효한 Access Token 조회, 파라미터 JSON 직렬화하여
+	 *     {@link EasyCodefApiService}로 전달
+	 * </p>
+	 *
+	 * @param request CODEF 상품 요청 객체
+	 * @return CODEF 서버 응답 결과
+	 */
+	EasyCodefResponse dispatchRequest(EasyCodefRequest request) {
+		String urlPath = easyCodefServiceType.getHost() + request.getProductUrl();
+		String bearerToken = token.getBearerAccessToken();
+		String jsonBody = JsonUtil.toJson(request.getParameterMap());
+
+		return apiService.requestProduct(urlPath, bearerToken, jsonBody);
+	}
+
+	/**
+	 * 저장된 Access Token 조회
+	 *
+	 * @return Access Token 문자열
+	 */
+	String getAccessToken() {
+		return token.getAccessToken();
+	}
+
+	/**
+	 * 신규 Access Token 발급
+	 *
+	 * @return 신규 Access Token 문자열
+	 */
+	String getNewAccessToken() {
+		return token.forceNewAccessToken();
+	}
+}
