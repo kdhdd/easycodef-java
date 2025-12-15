@@ -1,10 +1,12 @@
-package io.codef.api.util;
+package io.codef.api.unit.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import io.codef.api.util.AuthorizationUtil;
 
 @DisplayName("[Util Layer] AuthorizationUtil Test")
 public class AuthorizationUtilTest {

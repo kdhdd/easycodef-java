@@ -1,4 +1,4 @@
-package io.codef.api.service;
+package io.codef.api.unit.service;
 
 import static io.codef.api.constant.CodefHost.*;
 import static io.codef.api.constant.CodefPath.*;
@@ -27,6 +27,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.service.EasyCodefOAuthService;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Service Layer] EasyCodefOAuthService Test")

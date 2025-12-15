@@ -1,4 +1,4 @@
-package io.codef.api.service;
+package io.codef.api.unit.service;
 
 import static io.codef.api.constant.CodefConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,6 +25,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.service.EasyCodefApiService;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[Service Layer] EasyCodefApiService Test")

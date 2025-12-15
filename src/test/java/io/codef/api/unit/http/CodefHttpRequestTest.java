@@ -1,4 +1,4 @@
-package io.codef.api.http;
+package io.codef.api.unit.http;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.codef.api.http.CodefHttpRequest;
 
 @DisplayName("[HTTP Layer] CodefHttpRequest Test")
 public class CodefHttpRequestTest {

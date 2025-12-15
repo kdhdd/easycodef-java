@@ -1,10 +1,13 @@
-package io.codef.api.error;
+package io.codef.api.unit.error;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import io.codef.api.error.CodefError;
+import io.codef.api.error.CodefException;
 
 @DisplayName("[Error Layer] CodefException Test")
 public class CodefExceptionTest {
