@@ -12,6 +12,7 @@ import io.codef.api.util.JsonUtil;
 /**
  * CODEF 요청 값 검증을 위한 유틸리티 클래스
  *
+ * @version 2.0.0
  */
 public class CodefValidator {
 
@@ -92,7 +93,6 @@ public class CodefValidator {
 		}
 
 		Map<String, Object> twoWayInfoMap = JsonUtil.toMap(twoWayInfoObj);
-
 		if (!twoWayInfoMap.keySet().containsAll(REQUIRED_KEYS)) {
 			throw CodefException.from(CodefError.INVALID_2WAY_INFO);
 		}

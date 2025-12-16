@@ -11,6 +11,7 @@ import io.codef.api.http.HttpRequestBuilder;
 /**
  * CODEF OAuth 토큰 발급 서비스 클래스
  *
+ * @version 2.0.0
  */
 public class EasyCodefOAuthService extends EasyCodefService {
 

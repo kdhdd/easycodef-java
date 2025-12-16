@@ -1,5 +1,6 @@
 package io.codef.api;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import org.apache.commons.codec.binary.Base64;
@@ -13,6 +14,7 @@ import io.codef.api.util.AuthorizationUtil;
 /**
  * CODEF OAuth Access Token 관리를 위한 클래스
  *
+ * @version 2.0.0
  */
 public class EasyCodefToken {
 
@@ -93,7 +95,7 @@ public class EasyCodefToken {
 		String auth = clientId + ":" + clientSecret;
 		byte[] authEncBytes = Base64.encodeBase64(auth.getBytes());
 
-		return new String(authEncBytes);
+		return new String(authEncBytes, StandardCharsets.UTF_8);
 	}
 
 	/**

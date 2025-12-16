@@ -8,6 +8,7 @@ import io.codef.api.util.JsonUtil;
 /**
  * CODEF API 응답을 표현하는 DTO 클래스
  *
+ * @version 2.0.0
  */
 public class EasyCodefResponse {
 

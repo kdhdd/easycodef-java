@@ -10,10 +10,15 @@ import io.codef.api.error.CodefException;
 /**
  * {@link EasyCodefClient} 인스턴스를 서비스 타입 및 자격증명 기준으로 캐싱하는 레지스트리
  *
+ * @version 2.0.0
  */
 final class EasyCodefClientRegistry {
 
-	private final Map<Snapshot, EasyCodefClient> cache = new ConcurrentHashMap<>();
+	private final Map<Snapshot, EasyCodefClient> cache;
+
+	EasyCodefClientRegistry() {
+		this.cache = new ConcurrentHashMap<>();
+	}
 
 	/**
 	 * 설정 정보를 기반으로 {@link EasyCodefClient}를 조회하거나 없으면 생성하여 반환

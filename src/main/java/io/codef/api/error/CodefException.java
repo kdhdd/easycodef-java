@@ -3,6 +3,7 @@ package io.codef.api.error;
 /**
  * CODEF 라이브러리 전용 런타임 예외 클래스
  *
+ * @version 2.0.0
  */
 public class CodefException extends RuntimeException {
 

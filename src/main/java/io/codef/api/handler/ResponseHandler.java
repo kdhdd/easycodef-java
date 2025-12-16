@@ -18,21 +18,34 @@ import io.codef.api.util.UrlUtil;
 /**
  * HTTP 응답을 {@link EasyCodefResponse}로 변환하는 유틸리티 클래스
  *
+ * @version 2.0.0
  */
 public class ResponseHandler {
 
 	private ResponseHandler() {}
 
-
+	/**
+	 * HTTP 응답을 파싱하여 지정된 응답 타입으로 변환
+	 *
+	 * @param httpResponse CODEF 서버로부터 수신한 HTTP 응답
+	 * @param responseType 변환할 응답 클래스 타입
+	 * @param <T> 반환될 응답 타입
+	 * @return 파싱된 응답 객체
+	 */
 	public static <T> T processResponse(String httpResponse, Class<T> responseType) {
 		String decoded = UrlUtil.decode(httpResponse);
 		JsonNode jsonNode = JsonUtil.fromJson(decoded, JsonNode.class);
 
-		return responseType.equals(EasyCodefTokenResponse.class) ?
-			responseType.cast(handleTokenResponse(jsonNode)) :
-			responseType.cast(handleProductResponse(jsonNode));
+		return responseType.equals(EasyCodefTokenResponse.class) ? responseType.cast(handleTokenResponse(jsonNode))
+			: responseType.cast(handleProductResponse(jsonNode));
 	}
 
+	/**
+	 * OAuth 토큰 API 응답 처리
+	 *
+	 * @param jsonNode 파싱된 JSON 응답 노드
+	 * @return 파싱된 {@link EasyCodefTokenResponse}
+	 */
 	private static EasyCodefTokenResponse handleTokenResponse(JsonNode jsonNode) {
 		return JsonUtil.convertValue(jsonNode, EasyCodefTokenResponse.class);
 	}
@@ -45,7 +58,7 @@ public class ResponseHandler {
 	 *     {@link EasyCodefResponse}의 각 필드로 매핑
 	 * </p>
 	 *
-	 * @param jsonNode JSON 파싱된 응답 객체
+	 * @param jsonNode 파싱된 JSON 응답 노드
 	 * @return 파싱된 {@link EasyCodefResponse}
 	 */
 	private static EasyCodefResponse handleProductResponse(JsonNode jsonNode) {
@@ -92,7 +105,6 @@ public class ResponseHandler {
 		}
 
 		JsonNode dataNode = jsonNode.get(DATA.getValue());
-
 		if (dataNode == null) {
 			throw CodefException.from(PARSE_ERROR);
 		}
@@ -114,7 +126,6 @@ public class ResponseHandler {
 	 */
 	private static Object parseExtraInfo(JsonNode jsonNode) {
 		Map<String, Object> jsonMap = JsonUtil.toMap(jsonNode);
-
 		if (jsonMap != null) {
 			jsonMap.remove(RESULT.getValue());
 			jsonMap.remove(DATA.getValue());

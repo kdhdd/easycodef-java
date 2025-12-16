@@ -5,6 +5,7 @@ import io.codef.api.constant.CodefHost;
 /**
  * CODEF 서비스 타입 enum 클래스
  *
+ * @version 2.0.0
  */
 public enum EasyCodefServiceType {
 	DEMO(CodefHost.DEMO_DOMAIN),

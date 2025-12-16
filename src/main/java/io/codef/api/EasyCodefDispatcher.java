@@ -8,6 +8,7 @@ import io.codef.api.util.JsonUtil;
 /**
  * CODEF API 호출에 필요한 값을 변환하고 전달하는 디스패처 클래스
  *
+ * @version 2.0.0
  */
 public class EasyCodefDispatcher {
 
