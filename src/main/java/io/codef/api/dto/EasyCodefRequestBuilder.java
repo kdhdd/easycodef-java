@@ -9,6 +9,7 @@ import io.codef.api.handler.CodefValidator;
 /**
  * {@link EasyCodefRequest} 객체 생성을 위한 빌더 클래스
  *
+ * @version 2.0.0
  */
 public class EasyCodefRequestBuilder {
 

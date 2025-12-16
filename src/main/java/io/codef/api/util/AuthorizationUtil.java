@@ -3,6 +3,7 @@ package io.codef.api.util;
 /**
  * 인증 헤더 문자열 생성을 위한 유틸리티 클래스
  *
+ * @version 2.0.0
  */
 public class AuthorizationUtil {
 

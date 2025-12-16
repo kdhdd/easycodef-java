@@ -6,6 +6,7 @@ import java.util.Map;
 /**
  * {@link CodefHttpRequest} 객체 생성을 위한 빌더 클래스
  *
+ * @version 2.0.0
  */
 public class HttpRequestBuilder {
 

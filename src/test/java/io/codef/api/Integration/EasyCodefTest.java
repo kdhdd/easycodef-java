@@ -15,13 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.codef.api.EasyCodef;
 import io.codef.api.EasyCodefServiceType;
 
-/**
- * Please explain the class
- *
- * easycodef-java
- * @Author : hecto
- * @Since  : 2025. 12. 16. 
- */
 public class EasyCodefTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -34,9 +27,9 @@ public class EasyCodefTest {
 
 	@BeforeAll
 	static void setUp() {
-			easyCodef = new EasyCodef();
-			easyCodef.setClientInfoForDemo(clientId, clientSecret);
-			easyCodef.setPublicKey(publicKey);
+		easyCodef = new EasyCodef();
+		easyCodef.setClientInfoForDemo(clientId, clientSecret);
+		easyCodef.setPublicKey(publicKey);
 	}
 
 	@Test

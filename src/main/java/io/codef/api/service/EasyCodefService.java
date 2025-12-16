@@ -7,6 +7,7 @@ import io.codef.api.http.CodefHttpRequest;
 /**
  * CODEF API 요청 전송 공통 서비스 추상 클래스
  *
+ * @version 2.0.0
  */
 public abstract class EasyCodefService {
 
@@ -25,7 +26,9 @@ public abstract class EasyCodefService {
 	 * CODEF API 요청 실행 및 결과 반환
 	 *
 	 * @param request 전송할 HTTP 요청 정보
-	 * @return API 응답 결과를 처리한 EasyCodefResponse 객체
+	 * @param responseType 응답을 변환할 클래스 타입
+	 * @param <T> 반환될 응답 타입
+	 * @return 파싱 및 변환된 API 응답 객체
 	 */
 	<T> T sendRequest(CodefHttpRequest request, Class<T> responseType) {
 		String httpResponse = httpClient.execute(request);

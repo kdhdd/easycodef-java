@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 /**
  * CODEF Two-Way 필드 키 enum 클래스
  *
+ * @version 2.0.0
  */
 public enum TwoWayConstant {
 	JOB_INDEX("jobIndex"),

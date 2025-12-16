@@ -15,6 +15,7 @@ import io.codef.api.error.CodefException;
 /**
  * RSA 암호화를 위한 유틸리티 클래스
  *
+ * @version 2.0.0
  */
 public class RsaUtil {
 

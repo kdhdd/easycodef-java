@@ -13,6 +13,7 @@ import io.codef.api.error.CodefException;
 /**
  * JSON 직렬화/역직렬화를 위한 유틸리티 클래스
  *
+ * @version 2.0.0
  */
 public class JsonUtil {
 

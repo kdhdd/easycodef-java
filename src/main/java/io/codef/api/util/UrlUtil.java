@@ -10,6 +10,7 @@ import io.codef.api.error.CodefException;
 /**
  * URL 디코딩 처리 유틸리티 클래스
  *
+ * @version 2.0.0
  */
 public class UrlUtil {
 

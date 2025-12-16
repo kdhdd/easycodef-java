@@ -3,6 +3,7 @@ package io.codef.api.constant;
 /**
  * CODEF 도메인 정의 클래스
  *
+ * @version 2.0.0
  */
 public final class CodefHost {
 

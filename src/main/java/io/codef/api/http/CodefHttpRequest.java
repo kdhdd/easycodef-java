@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * CODEF API 통신을 위한 HTTP 요청 정보 객체
  *
+ * @version 2.0.0
  */
 public class CodefHttpRequest {
 	private final String url;
