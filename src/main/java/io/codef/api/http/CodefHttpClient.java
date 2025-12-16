@@ -58,9 +58,9 @@ public class CodefHttpClient {
 
 			return getResponse(connection);
 		} catch (SocketTimeoutException e) {
-			throw CodefException.from(CodefError.TIMEOUT_ERROR);
+			throw CodefException.of(CodefError.TIMEOUT_ERROR, e);
 		} catch (IOException e) {
-			throw CodefException.from(CodefError.IO_ERROR);
+			throw CodefException.of(CodefError.IO_ERROR, e);
 		} finally {
 			if (connection != null) {
 				connection.disconnect();
