@@ -54,9 +54,10 @@ public class RsaUtilTest {
 
 		@Test
 		@DisplayName("[Exception] 잘못된 Public Key 입력 시 RSA_ENCRYPTION_ERROR 예외처리")
-		void encryptRsa_invalidKey() {
+		void encryptRsa_invalid_publicKey() {
 			String plainText = "Sensitive Data";
-			String invalidPublicKey = "NotARealKey";
+			String invalidPublicKey =
+				Base64.getEncoder().encodeToString("invalid-key".getBytes());
 
 			CodefException exception = assertThrows(CodefException.class,
 				() -> RsaUtil.encryptRsa(plainText, invalidPublicKey));
