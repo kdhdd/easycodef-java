@@ -1,51 +1,38 @@
 package io.codef.api.unit.http;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import io.codef.api.error.CodefError;
+import io.codef.api.error.CodefException;
 import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
+@DisplayName("[HTTP Layer] CodefHttpClient Test")
 public class CodefHttpClientTest {
 
-	private static final ObjectMapper mapper = new ObjectMapper();
-
-	private CodefHttpRequest request;
 	private CodefHttpClient httpClient;
 
 	@BeforeEach
-	void setUp() throws JsonProcessingException {
+	void setUp() {
 		this.httpClient = new CodefHttpClient();
-
-		Map<String, Object> body = new HashMap<>();
-		body.put("name", "CODEF");
-		body.put("purpose", "http client test");
-
-		String jsonBody = mapper.writeValueAsString(body);
-
-		this.request = HttpRequestBuilder.builder()
-			.url("https://postman-echo.com/post")
-			.header("Content-Type", "application/json")
-			.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-			.body(jsonBody)
-			.build();
 	}
 
 	@Test
-	void execute_success() {
-		String response = httpClient.execute(request);
+	@DisplayName("[Exception] URL 형식이 올바르지 않은 경우")
+	void createConnection_IOException() {
+		CodefHttpRequest request = HttpRequestBuilder.builder()
+			.url("no-protocol-url")
+			.build();
 
-		System.out.println(response);
+		CodefException exception = assertThrows(CodefException.class,
+			() -> httpClient.execute(request));
 
-		assertNotNull(response);
+		assertEquals(CodefError.IO_ERROR, exception.getCodefError());
 	}
 }
