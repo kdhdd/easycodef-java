@@ -105,7 +105,7 @@ public class ResponseHandler {
 		}
 
 		JsonNode dataNode = jsonNode.get(DATA.getValue());
-		if (dataNode == null) {
+		if (dataNode.isNull()) {
 			throw CodefException.from(PARSE_ERROR);
 		}
 
@@ -126,10 +126,9 @@ public class ResponseHandler {
 	 */
 	private static Object parseExtraInfo(JsonNode jsonNode) {
 		Map<String, Object> jsonMap = JsonUtil.toMap(jsonNode);
-		if (jsonMap != null) {
-			jsonMap.remove(RESULT.getValue());
-			jsonMap.remove(DATA.getValue());
-		}
+
+		jsonMap.remove(RESULT.getValue());
+		jsonMap.remove(DATA.getValue());
 
 		return jsonMap;
 	}
