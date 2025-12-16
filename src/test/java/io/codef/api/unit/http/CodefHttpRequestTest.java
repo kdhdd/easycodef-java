@@ -17,7 +17,7 @@ import io.codef.api.http.CodefHttpRequest;
 public class CodefHttpRequestTest {
 
 	@Test
-	@DisplayName("[Success] CodefHttpRequest 생성자 및 Getter 테스트")
+	@DisplayName("[Success] CodefHttpRequest 생성자 테스트")
 	void constructor_success() throws JsonProcessingException {
 		String url = "https://api.codef.io/v1/test";
 
