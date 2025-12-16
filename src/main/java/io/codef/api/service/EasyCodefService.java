@@ -1,6 +1,5 @@
 package io.codef.api.service;
 
-import io.codef.api.dto.EasyCodefResponse;
 import io.codef.api.handler.ResponseHandler;
 import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
@@ -28,9 +27,9 @@ public abstract class EasyCodefService {
 	 * @param request 전송할 HTTP 요청 정보
 	 * @return API 응답 결과를 처리한 EasyCodefResponse 객체
 	 */
-	EasyCodefResponse sendRequest(CodefHttpRequest request) {
+	<T> T sendRequest(CodefHttpRequest request, Class<T> responseType) {
 		String httpResponse = httpClient.execute(request);
 
-		return ResponseHandler.processResponse(httpResponse);
+		return ResponseHandler.processResponse(httpResponse, responseType);
 	}
 }

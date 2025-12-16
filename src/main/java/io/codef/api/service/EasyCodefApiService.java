@@ -33,6 +33,6 @@ public class EasyCodefApiService extends EasyCodefService {
 			.body(jsonBody)
 			.build();
 
-		return sendRequest(request);
+		return sendRequest(request, EasyCodefResponse.class);
 	}
 }

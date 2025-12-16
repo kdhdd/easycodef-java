@@ -1,7 +1,6 @@
 package io.codef.api.handler;
 
 import static io.codef.api.constant.CodefConstant.*;
-import static io.codef.api.constant.OAuthConstant.*;
 import static io.codef.api.error.CodefError.*;
 
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import io.codef.api.dto.EasyCodefResponse;
+import io.codef.api.dto.EasyCodefTokenResponse;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.util.JsonUtil;
@@ -23,30 +23,18 @@ public class ResponseHandler {
 
 	private ResponseHandler() {}
 
-	/**
-	 * HTTP 응답을 {@link EasyCodefResponse}로 변환하여 반환
-	 *
-	 * @param httpResponse 수신한 원본 HTTP 응답 문자열
-	 * @return 변환된 {@link EasyCodefResponse} 객체
-	 */
-	public static EasyCodefResponse processResponse(String httpResponse) {
+
+	public static <T> T processResponse(String httpResponse, Class<T> responseType) {
 		String decoded = UrlUtil.decode(httpResponse);
 		JsonNode jsonNode = JsonUtil.fromJson(decoded, JsonNode.class);
 
-		return jsonNode.has(ACCESS_TOKEN.getValue())
-			? handleTokenResponse(jsonNode)
-			: handleProductResponse(jsonNode);
+		return responseType.equals(EasyCodefTokenResponse.class) ?
+			responseType.cast(handleTokenResponse(jsonNode)) :
+			responseType.cast(handleProductResponse(jsonNode));
 	}
 
-	/**
-	 * Access Token이 포함된 OAuth 응답 처리
-	 *
-	 * @param jsonNode JSON 파싱된 응답 객체
-	 * @return 토큰 정보를 포함하는 {@link EasyCodefResponse}
-	 */
-	private static EasyCodefResponse handleTokenResponse(JsonNode jsonNode) {
-		Map<String, Object> jsonMap = JsonUtil.toMap(jsonNode);
-		return EasyCodefResponse.from(jsonMap);
+	private static EasyCodefTokenResponse handleTokenResponse(JsonNode jsonNode) {
+		return JsonUtil.convertValue(jsonNode, EasyCodefTokenResponse.class);
 	}
 
 	/**
@@ -125,13 +113,13 @@ public class ResponseHandler {
 	 * @return {@code result}, {@code data}를 제외한 나머지 필드 Map
 	 */
 	private static Object parseExtraInfo(JsonNode jsonNode) {
-		Map<String, Object> extraInfo = JsonUtil.toMap(jsonNode);
+		Map<String, Object> jsonMap = JsonUtil.toMap(jsonNode);
 
-		if (extraInfo != null) {
-			extraInfo.remove(RESULT.getValue());
-			extraInfo.remove(DATA.getValue());
+		if (jsonMap != null) {
+			jsonMap.remove(RESULT.getValue());
+			jsonMap.remove(DATA.getValue());
 		}
 
-		return extraInfo;
+		return jsonMap;
 	}
 }

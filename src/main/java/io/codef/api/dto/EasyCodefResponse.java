@@ -21,22 +21,6 @@ public class EasyCodefResponse {
 		this.extraInfo = extraInfo;
 	}
 
-	private EasyCodefResponse(Object data) {
-		this.result = null;
-		this.data = data;
-		this.extraInfo = null;
-	}
-
-	/**
-	 * 토큰 응답({@code data}만 존재)을 생성
-	 *
-	 * @param data 응답 데이터 객체
-	 * @return 생성된 {@link EasyCodefResponse} 인스턴스
-	 */
-	public static EasyCodefResponse from(Object data) {
-		return new EasyCodefResponse(data);
-	}
-
 	/**
 	 * 전체 응답 요소를 지정하여 {@link EasyCodefResponse}를 생성
 	 *
@@ -59,17 +43,6 @@ public class EasyCodefResponse {
 
 	public Object getExtraInfo() {
 		return extraInfo;
-	}
-
-	/**
-	 * {@code data} 필드를 지정한 타입으로 변환하여 반환
-	 *
-	 * @param clazz 변환 대상 타입
-	 * @param <T>   반환 타입
-	 * @return      변환된 타입의 데이터 객체
-	 */
-	public <T> T getData(Class<T> clazz) {
-		return JsonUtil.convertValue(data, clazz);
 	}
 
 	/**
