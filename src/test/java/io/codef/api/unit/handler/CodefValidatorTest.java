@@ -112,6 +112,24 @@ public class CodefValidatorTest {
 		}
 
 		@Test
+		@DisplayName("[Exception] 파라미터가 null인 경우 EMPTY_PARAMETER 예외처리")
+		void validateTwoWayKeywordsOrThrow_null() {
+			CodefException exception = assertThrows(CodefException.class,
+				() -> CodefValidator.validateTwoWayKeywordsOrThrow(null));
+
+			assertEquals(CodefError.EMPTY_PARAMETER, exception.getCodefError());
+		}
+
+		@Test
+		@DisplayName("[Exception] 파라미터가 비어있으면 EMPTY_PARAMETER 예외처리")
+		void validateTwoWayKeywordsOrThrow_empty() {
+			CodefException exception = assertThrows(CodefException.class,
+				() -> CodefValidator.validateTwoWayKeywordsOrThrow(new HashMap<>()));
+
+			assertEquals(CodefError.EMPTY_PARAMETER, exception.getCodefError());
+		}
+
+		@Test
 		@DisplayName("[Exception] is2Way 키워드가 포함된 경우 INVALID_2WAY_KEYWORD 예외처리")
 		void validateTwoWayKeywordsOrThrow_containsIs2Way() {
 			Map<String, Object> params = new HashMap<>();
@@ -135,6 +153,15 @@ public class CodefValidatorTest {
 				() -> CodefValidator.validateTwoWayKeywordsOrThrow(params));
 
 			assertEquals(CodefError.INVALID_2WAY_KEYWORD, exception.getCodefError());
+		}
+
+		@Test
+		@DisplayName("[Exception] 파라미터가 null인 경우 EMPTY_PARAMETER 예외처리")
+		void validateTwoWayInfoOrThrow_null() {
+			CodefException exception = assertThrows(CodefException.class,
+				() -> CodefValidator.validateTwoWayInfoOrThrow(null));
+
+			assertEquals(CodefError.EMPTY_PARAMETER, exception.getCodefError());
 		}
 
 		@Test
@@ -166,10 +193,23 @@ public class CodefValidatorTest {
 		}
 
 		@Test
-		@DisplayName("[Exception] twoWayInfo 값이 없으면 INVALID_2WAY_INFO 예외처리")
-		void validateTwoWayInfoOrThrow_invalid2WayInfo() {
+		@DisplayName("[Exception] twoWayInfo 값이 null인 경우 INVALID_2WAY_INFO 예외처리")
+		void validateTwoWayInfoOrThrow_null_2WayInfo() {
 			Map<String, Object> params = new HashMap<>();
 			params.put(IS_2WAY.getValue(), true);
+
+			CodefException exception = assertThrows(CodefException.class,
+				() -> CodefValidator.validateTwoWayInfoOrThrow(params));
+
+			assertEquals(CodefError.INVALID_2WAY_INFO, exception.getCodefError());
+		}
+
+		@Test
+		@DisplayName("[Exception] twoWayInfo 값이 비어있으면 INVALID_2WAY_INFO 예외처리")
+		void validateTwoWayInfoOrThrow_empty_2WayInfo() {
+			Map<String, Object> params = new HashMap<>();
+			params.put(IS_2WAY.getValue(), true);
+			params.put(INFO_KEY.getValue(), "");
 
 			CodefException exception = assertThrows(CodefException.class,
 				() -> CodefValidator.validateTwoWayInfoOrThrow(params));
