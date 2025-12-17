@@ -1,7 +1,6 @@
 package io.codef.api;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import io.codef.api.dto.EasyCodefRequest;
 import io.codef.api.dto.EasyCodefRequestBuilder;
@@ -17,10 +16,15 @@ public class EasyCodef extends EasyCodefProperties {
 	}
 
 	@Deprecated
+	public String getPublicKey() {
+		return super.getPublicKey();
+	}
+
+	@Deprecated
 	public String requestProduct(
 		String productUrl,
 		EasyCodefServiceType serviceType,
-		Map<String, Object> parameterMap) {
+		HashMap<String, Object> parameterMap) {
 		EasyCodefClient easyCodefClient = registry.getOrCreate(this, serviceType);
 
 		EasyCodefRequest request = EasyCodefRequestBuilder
