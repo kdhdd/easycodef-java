@@ -77,5 +77,17 @@ public class EasyCodefTest {
 
 			assertEquals(EMPTY_PUBLIC_KEY, exception.getCodefError());
 		}
+
+		@Test
+		@DisplayName("[Exception] ServiceType 미설정 시 EMPTY_SERVICE_TYPE 예외처리")
+		void requestProduct_emptyServiceType() {
+			easyCodef.setClientInfoForDemo("demo-id", "demo-secret");
+			easyCodef.setPublicKey("test-public-key");
+
+			CodefException exception = assertThrows(CodefException.class,
+			() -> easyCodef.requestProduct("/v1/test", null, new HashMap<>()));
+
+			assertEquals(EMPTY_SERVICE_TYPE, exception.getCodefError());
+		}
 	}
 }
