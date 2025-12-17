@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.codef.api.dto.EasyCodefResponse;
+import io.codef.api.dto.EasyCodefTokenResponse;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.handler.ResponseHandler;
@@ -47,6 +48,17 @@ public class ResponseHandlerTest {
 	@Nested
 	@DisplayName("[Throw Exceptions] 예외처리가 정상 동작하면 성공")
 	class ExceptionCases {
+
+		@Test
+		@DisplayName("[Exception] 토큰 응답이 문자열 \"null\"인 경우 OAUTH_ERROR 예외처리")
+		void handleTokenResponse_null() {
+			String httpResponse = "null";
+
+			CodefException exception = assertThrows(CodefException.class,
+				() -> ResponseHandler.processResponse(httpResponse, EasyCodefTokenResponse.class));
+
+			assertEquals(CodefError.OAUTH_ERROR, exception.getCodefError());
+		}
 
 		@Test
 		@DisplayName("[Exception] result 필드가 없는 경우 PARSE_ERROR 예외처리")
