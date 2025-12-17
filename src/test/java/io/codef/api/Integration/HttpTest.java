@@ -18,16 +18,19 @@ import io.codef.api.error.CodefException;
 import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
+import io.codef.api.service.EasyCodefOAuthService;
 
-public class CodefHttpClientTest {
+public class HttpTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	private CodefHttpClient httpClient;
+	private EasyCodefOAuthService easyCodefOAuthService;
 
 	@BeforeEach
 	void setUp() {
 		this.httpClient = new CodefHttpClient();
+		this.easyCodefOAuthService = new EasyCodefOAuthService(this.httpClient);
 	}
 
 	@Nested
@@ -93,7 +96,7 @@ public class CodefHttpClientTest {
 	class ExceptionCases {
 
 		@Test
-		@DisplayName("[Exception] 해당 주소(서버)에 연결할 수 없는 경우")
+		@DisplayName("[Exception] 해당 주소(서버)에 연결할 수 없는 경우 IO_ERROR 예외처리")
 		void getResponse_IOException() {
 			CodefHttpRequest request = HttpRequestBuilder.builder()
 				.url("http://127.0.0.1:59999")
@@ -103,6 +106,28 @@ public class CodefHttpClientTest {
 				() -> httpClient.execute(request));
 
 			assertEquals(CodefError.IO_ERROR, exception.getCodefError());
+		}
+
+		@Test
+		@DisplayName("[Exception] HTTP 상태 에러코드가 401인 경우 UNAUTHORIZED 예외처리")
+		void getResponse_UNAUTHORIZED() {
+			CodefException exception = assertThrows(CodefException.class,
+				() -> easyCodefOAuthService.requestToken("invalid-token"));
+
+			assertEquals(CodefError.UNAUTHORIZED, exception.getCodefError());
+		}
+
+		@Test
+		@DisplayName("[Exception] UNAUTHORIZED가 아닌 HTTP 상태 에러코드(400, 403, 404, 500 등) INTERNAL_SERVER_ERROR 예외처리")
+		void getResponse_INTERNAL_SERVER_ERROR() {
+			CodefHttpRequest request = HttpRequestBuilder.builder()
+				.url("https://development.codef.io/not-exist-path")
+				.build();
+
+			CodefException exception = assertThrows(CodefException.class,
+				() -> httpClient.execute(request));
+
+			assertEquals(CodefError.INTERNAL_SERVER_ERROR, exception.getCodefError());
 		}
 	}
 }
