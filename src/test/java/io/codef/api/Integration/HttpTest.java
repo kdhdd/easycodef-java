@@ -20,6 +20,7 @@ import io.codef.api.http.CodefHttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 import io.codef.api.service.EasyCodefOAuthService;
 
+@DisplayName("[Integration] HTTP Test")
 public class HttpTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();

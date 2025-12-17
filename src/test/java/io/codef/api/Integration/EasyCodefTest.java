@@ -1,5 +1,6 @@
 package io.codef.api.Integration;
 
+import static io.codef.api.fixture.CodefCredentialFixture.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.Instant;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,14 +19,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.codef.api.EasyCodef;
 import io.codef.api.EasyCodefServiceType;
+import io.codef.api.error.CodefError;
+import io.codef.api.error.CodefException;
 
+@DisplayName("[Integration] EasyCodef Test")
 public class EasyCodefTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
-
-	private static final String clientId = System.getenv("CLIENT_ID");
-	private static final String clientSecret = System.getenv("CLIENT_SECRET");
-	private static final String publicKey = System.getenv("PUBLIC_KEY");
 
 	private static EasyCodef easyCodef;
 
@@ -35,70 +36,99 @@ public class EasyCodefTest {
 		easyCodef.setPublicKey(publicKey);
 	}
 
-	@Test
-	void requestProduct_success() throws JsonProcessingException {
-		String productUrl = "/v1/kr/etc/mt/car-history/flooded-vehicle";
-		Map<String, Object> parameterMap = new HashMap<>();
-		parameterMap.put("organization", "0100");
-		parameterMap.put("carNo", "12가1234");
+	@Nested
+	@DisplayName("[isSuccessResponse] 생성이 정상적으로 완료되면 성공")
+	class ResponseCases {
 
-		String response = easyCodef.requestProduct(productUrl, EasyCodefServiceType.DEMO, parameterMap);
-		JsonNode root = mapper.readTree(response);
+		@Test
+		@DisplayName("[Success] 상품 요청 응답에 transactionId가 포함되면 성공")
+		void requestProduct_success() throws JsonProcessingException {
+			String productUrl = "/v1/kr/etc/mt/car-history/flooded-vehicle";
+			HashMap<String, Object> parameterMap = new HashMap<>();
+			parameterMap.put("organization", "0100");
+			parameterMap.put("carNo", "12가1234");
 
-		String transactionId = root.path("result").path("transactionId").asText();
+			String response = easyCodef.requestProduct(productUrl, EasyCodefServiceType.DEMO, parameterMap);
+			JsonNode root = mapper.readTree(response);
 
-		assertAll(
-			() -> assertNotNull(response),
-			() -> assertNotNull(transactionId));
+			String transactionId = root.path("result").path("transactionId").asText();
+
+			assertAll(
+				() -> assertNotNull(response),
+				() -> assertNotNull(transactionId));
+		}
+
+		@Test
+		@DisplayName("[Success] 토큰 요청 시 exp가 현재 시간(now)보다 크면 성공")
+		void requestToken_validExp() throws JsonProcessingException {
+			String token = easyCodef.requestToken(EasyCodefServiceType.DEMO);
+
+			long exp = extractExp(token);
+			long now = Instant.now().getEpochSecond();
+
+			assertAll(
+				() -> assertTrue(exp > now)
+			);
+		}
+
+		@Test
+		@DisplayName("[Success] 신규 토큰 발급 시 exp가 갱신되고 현재 시간(now)보다 크면 성공")
+		void requestNewToken_updateExp() throws JsonProcessingException {
+			String oldToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
+			String newToken = easyCodef.requestNewToken(EasyCodefServiceType.DEMO);
+
+			long oldTokenExp = extractExp(oldToken);
+			long newTokenExp = extractExp(newToken);
+			long now = Instant.now().getEpochSecond();
+
+			assertAll(
+				() -> assertTrue(newTokenExp >= oldTokenExp),
+				() -> assertTrue(newTokenExp > now)
+			);
+		}
+
+		@Test
+		@DisplayName("[Success] 토큰 요청 시 캐싱된 토큰 반환 검증")
+		void requestToken_verifyLifeCycle() {
+			String firstToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
+			String secondToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
+
+			assertAll(
+				() -> assertEquals(firstToken, secondToken)
+			);
+		}
+
+		@Test
+		@DisplayName("[Success] 신규 발급 요청 시 새로운 토큰 반환 검증")
+		void requestNewToken_verifyLifeCycle() {
+			String oldToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
+			String newToken = easyCodef.requestNewToken(EasyCodefServiceType.DEMO);
+
+			assertAll(
+				() -> assertNotEquals(oldToken, newToken)
+			);
+		}
 	}
 
-	@Test
-	void requestToken_validExp() throws JsonProcessingException {
-		String token = easyCodef.requestToken(EasyCodefServiceType.DEMO);
+	@Nested
+	@DisplayName("[Throw Exceptions] 예외처리가 정상 동작하면 성공")
+	class ExceptionCases {
 
-		long exp = extractExp(token);
-		long now = Instant.now().getEpochSecond();
+		@Test
+		@DisplayName("[Exception] TwoWay 정보 없이 인증 요청 시 INVALID_2WAY_INFO 예외처리")
+		void requestCertification_INVALID_2WAY_INFO() {
+			String productUrl = "/v1/kr/etc/mt/car-history/flooded-vehicle";
+			HashMap<String, Object> parameterMap = new HashMap<>();
+			parameterMap.put("organization", "0100");
+			parameterMap.put("carNo", "12가1234");
 
-		assertAll(
-			() -> assertTrue(exp > now)
-		);
-	}
+			CodefException exception = assertThrows(CodefException.class,
+				() -> easyCodef.requestCertification(productUrl, EasyCodefServiceType.DEMO, parameterMap));
 
-	@Test
-	void requestNewToken_updateExp() throws JsonProcessingException {
-		String oldToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
-		String newToken = easyCodef.requestNewToken(EasyCodefServiceType.DEMO);
-
-		long oldTokenExp = extractExp(oldToken);
-		long newTokenExp = extractExp(newToken);
-		long now = Instant.now().getEpochSecond();
-
-		assertAll(
-			() -> assertTrue(newTokenExp >= oldTokenExp),
-			() -> assertTrue(newTokenExp > now)
-		);
-	}
-
-	@Test
-	@DisplayName("[Success] 토큰 요청 시 캐싱된 토큰 반환 검증")
-	void requestToken_verifyLifeCycle() {
-		String firstToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
-		String secondToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
-
-		assertAll(
-			() -> assertSame(firstToken, secondToken)
-		);
-	}
-
-	@Test
-	@DisplayName("[Success] 신규 발급 요청 시 새로운 토큰 반환 검증")
-	void requestNewToken_verifyLifeCycle() {
-		String oldToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
-		String newToken = easyCodef.requestNewToken(EasyCodefServiceType.DEMO);
-
-		assertAll(
-			() -> assertNotSame(oldToken, newToken)
-		);
+			assertAll(
+				() -> assertEquals(CodefError.INVALID_2WAY_INFO, exception.getCodefError())
+			);
+		}
 	}
 
 	private long extractExp(String token) throws JsonProcessingException {

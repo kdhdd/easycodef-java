@@ -10,10 +10,14 @@ import java.util.Map;
  */
 public class HttpRequestBuilder {
 
-	private final Map<String, String> headers = new HashMap<>();
+	private final Map<String, String> headers;
 
 	private String url;
 	private String body;
+
+	private HttpRequestBuilder() {
+		this.headers = new HashMap<>();
+	}
 
 	/**
 	 * HttpRequestBuilder 인스턴스 생성

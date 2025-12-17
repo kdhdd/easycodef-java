@@ -47,6 +47,10 @@ public class ResponseHandler {
 	 * @return 파싱된 {@link EasyCodefTokenResponse}
 	 */
 	private static EasyCodefTokenResponse handleTokenResponse(JsonNode jsonNode) {
+		if (jsonNode.isNull()) {
+			throw CodefException.from(CodefError.OAUTH_ERROR);
+		}
+
 		return JsonUtil.convertValue(jsonNode, EasyCodefTokenResponse.class);
 	}
 

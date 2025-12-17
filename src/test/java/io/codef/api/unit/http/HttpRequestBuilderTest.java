@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.codef.api.http.CodefHttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
-@DisplayName("[HTTP Layer] HttpRequestBuilder Test")
+@DisplayName("[HTTP Layer] HttpRequestBuilder Unit Test")
 public class HttpRequestBuilderTest {
 
 	@Nested

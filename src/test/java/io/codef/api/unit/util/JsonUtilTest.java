@@ -19,7 +19,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.util.JsonUtil;
 
-@DisplayName("[Util Layer] JsonUtil Test")
+@DisplayName("[Util Layer] JsonUtil Unit Test")
 public class JsonUtilTest {
 
 	@Nested

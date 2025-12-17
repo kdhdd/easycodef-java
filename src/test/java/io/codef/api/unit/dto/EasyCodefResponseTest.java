@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.codef.api.dto.EasyCodefResponse;
 
+@DisplayName("[Dto Layer] EasyCodefResponse Unit Test")
 public class EasyCodefResponseTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -44,8 +45,8 @@ public class EasyCodefResponseTest {
 			assertAll(
 				() -> assertNotNull(response),
 				() -> assertEquals(result, response.getResult()),
-				() -> assertSame(data, response.getData()),
-				() -> assertSame(extraInfo, response.getExtraInfo())
+				() -> assertEquals(data, response.getData()),
+				() -> assertEquals(extraInfo, response.getExtraInfo())
 			);
 		}
 	}

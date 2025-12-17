@@ -105,10 +105,6 @@ public class EasyCodefToken {
 		String basicToken = AuthorizationUtil.createBasicAuth(oauthToken);
 		EasyCodefTokenResponse response = oAuthService.requestToken(basicToken);
 
-		if (response == null) {
-			throw CodefException.from(CodefError.OAUTH_ERROR);
-		}
-
 		this.accessToken = response.getAccessToken();
 		this.expiresAt = LocalDateTime.now()
 			.plusSeconds(response.getExpiresIn());
