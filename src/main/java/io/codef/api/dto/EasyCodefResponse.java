@@ -59,10 +59,7 @@ public class EasyCodefResponse {
 		root.put("data", data);
 
 		if (extraInfo != null) {
-			Map<String, Object> extraMap = JsonUtil.toMap(extraInfo);
-			if (extraMap != null) {
-				root.putAll(extraMap);
-			}
+			root.putAll(JsonUtil.toMap(extraInfo));
 		}
 
 		return JsonUtil.toJson(root);

@@ -28,12 +28,4 @@ public class EasyCodefTokenResponse {
 	public int getExpiresIn() {
 		return expiresIn;
 	}
-
-	public String getTokenType() {
-		return tokenType;
-	}
-
-	public String getScope() {
-		return scope;
-	}
 }
