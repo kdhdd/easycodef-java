@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 
-@DisplayName("[Error Layer] CodefException Test")
+@DisplayName("[Error Layer] CodefException Unit Test")
 public class CodefExceptionTest {
 
 	@Nested

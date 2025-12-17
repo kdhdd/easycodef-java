@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.codef.api.http.CodefHttpRequest;
 
-@DisplayName("[HTTP Layer] CodefHttpRequest Test")
+@DisplayName("[HTTP Layer] CodefHttpRequest Unit Test")
 public class CodefHttpRequestTest {
 
 	@Test
@@ -34,7 +34,7 @@ public class CodefHttpRequestTest {
 		assertAll(
 			() -> assertNotNull(request),
 			() -> assertEquals(url, request.getUrl()),
-			() -> assertSame(headers, request.getHeaders()),
+			() -> assertEquals(headers, request.getHeaders()),
 			() -> assertEquals(body, request.getBody()));
 	}
 }

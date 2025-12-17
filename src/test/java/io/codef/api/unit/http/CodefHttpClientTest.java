@@ -13,7 +13,7 @@ import io.codef.api.http.CodefHttpClient;
 import io.codef.api.http.CodefHttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
-@DisplayName("[HTTP Layer] CodefHttpClient Test")
+@DisplayName("[HTTP Layer] CodefHttpClient Unit Test")
 public class CodefHttpClientTest {
 
 	private CodefHttpClient httpClient;

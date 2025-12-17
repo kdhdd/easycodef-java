@@ -16,7 +16,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.util.RsaUtil;
 
-@DisplayName("[Util Layer] RsaUtil Test")
+@DisplayName("[Util Layer] RsaUtil Unit Test")
 public class RsaUtilTest {
 
 	private static String validPublicKey;

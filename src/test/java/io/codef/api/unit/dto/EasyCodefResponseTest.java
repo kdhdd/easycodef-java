@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.codef.api.dto.EasyCodefResponse;
 
-@DisplayName("[Dto Layer] EasyCodefResponse Test")
+@DisplayName("[Dto Layer] EasyCodefResponse Unit Test")
 public class EasyCodefResponseTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();

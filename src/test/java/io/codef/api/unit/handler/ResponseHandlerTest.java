@@ -21,7 +21,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.handler.ResponseHandler;
 
-@DisplayName("[Handler Layer] ResponseHandler Test")
+@DisplayName("[Handler Layer] ResponseHandler Unit Test")
 public class ResponseHandlerTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();

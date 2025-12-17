@@ -1,6 +1,7 @@
 package io.codef.api.unit.root;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static io.codef.api.fixture.CodefCredentialFixture.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,12 +10,8 @@ import io.codef.api.EasyCodefBuilder;
 import io.codef.api.EasyCodefClient;
 import io.codef.api.EasyCodefServiceType;
 
-@DisplayName("[Root Layer] EasyCodefClient Test")
+@DisplayName("[Root Layer] EasyCodefClient Unit Test")
 public class EasyCodefClientTest {
-
-	private static final String clientId = System.getenv("CLIENT_ID");
-	private static final String clientSecret = System.getenv("CLIENT_SECRET");
-	private static final String publicKey = System.getenv("PUBLIC_KEY");
 
 	@Test
 	@DisplayName("[Success] publicKey 정상 조회")

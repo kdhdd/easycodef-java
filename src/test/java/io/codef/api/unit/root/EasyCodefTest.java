@@ -14,7 +14,7 @@ import io.codef.api.EasyCodef;
 import io.codef.api.EasyCodefServiceType;
 import io.codef.api.error.CodefException;
 
-@DisplayName("[Root Layer] EasyCodef Test")
+@DisplayName("[Root Layer] EasyCodef Unit Test")
 public class EasyCodefTest {
 
 	private EasyCodef easyCodef;
