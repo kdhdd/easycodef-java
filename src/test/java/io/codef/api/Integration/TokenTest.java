@@ -43,8 +43,8 @@ public class TokenTest {
 	private LocalDateTime invokeGetAccessTokenWithExpiresAt(LocalDateTime initialExpiresAt) throws Exception {
 		Class<?> tokenClass = Class.forName("io.codef.api.EasyCodefToken");
 
-		Constructor<?> constructor =
-			tokenClass.getDeclaredConstructor(String.class, String.class, EasyCodefOAuthService.class);
+		Constructor<?> constructor = tokenClass.getDeclaredConstructor(String.class, String.class,
+			EasyCodefOAuthService.class);
 		constructor.setAccessible(true);
 
 		Object tokenInstance = constructor.newInstance(clientId, clientSecret, oAuthService);
@@ -57,6 +57,6 @@ public class TokenTest {
 		getAccessTokenMethod.setAccessible(true);
 		getAccessTokenMethod.invoke(tokenInstance);
 
-		return (LocalDateTime) expiresAtField.get(tokenInstance);
+		return (LocalDateTime)expiresAtField.get(tokenInstance);
 	}
 }

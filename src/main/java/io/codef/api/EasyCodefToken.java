@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import org.apache.commons.codec.binary.Base64;
 
 import io.codef.api.dto.EasyCodefTokenResponse;
-import io.codef.api.error.CodefError;
-import io.codef.api.error.CodefException;
 import io.codef.api.service.EasyCodefOAuthService;
 import io.codef.api.util.AuthorizationUtil;
 

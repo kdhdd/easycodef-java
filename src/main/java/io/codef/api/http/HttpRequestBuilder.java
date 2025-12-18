@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@link CodefHttpRequest} 객체 생성을 위한 빌더 클래스
+ * {@link HttpRequest} 객체 생성을 위한 빌더 클래스
  *
  * @version 2.0.0
  */
@@ -63,11 +63,11 @@ public class HttpRequestBuilder {
 	}
 
 	/**
-	 * 설정 값 기반 {@link CodefHttpRequest} 생성
+	 * 설정 값 기반 {@link HttpRequest} 생성
 	 *
-	 * @return 새로운 {@link CodefHttpRequest} 객체
+	 * @return 새로운 {@link HttpRequest} 객체
 	 */
-	public CodefHttpRequest build() {
-		return new CodefHttpRequest(url, headers, body);
+	public HttpRequest build() {
+		return new HttpRequest(url, headers, body);
 	}
 }

@@ -15,7 +15,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.handler.CodefValidator;
 
-@DisplayName("[Handler Layer] CodefValidator Unit Test")
+@DisplayName("[Unit][Handler] CodefValidator Test")
 public class CodefValidatorTest {
 
 	@Nested

@@ -14,7 +14,7 @@ import io.codef.api.EasyCodef;
 import io.codef.api.EasyCodefServiceType;
 import io.codef.api.error.CodefException;
 
-@DisplayName("[Root Layer] EasyCodef Unit Test")
+@DisplayName("[Unit][Root] EasyCodef Test")
 public class EasyCodefTest {
 
 	private EasyCodef easyCodef;
@@ -85,7 +85,7 @@ public class EasyCodefTest {
 			easyCodef.setPublicKey("test-public-key");
 
 			CodefException exception = assertThrows(CodefException.class,
-			() -> easyCodef.requestProduct("/v1/test", null, new HashMap<>()));
+				() -> easyCodef.requestProduct("/v1/test", null, new HashMap<>()));
 
 			assertEquals(EMPTY_SERVICE_TYPE, exception.getCodefError());
 		}

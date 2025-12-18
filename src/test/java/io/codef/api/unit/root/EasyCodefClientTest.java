@@ -10,7 +10,7 @@ import io.codef.api.EasyCodefBuilder;
 import io.codef.api.EasyCodefClient;
 import io.codef.api.EasyCodefServiceType;
 
-@DisplayName("[Root Layer] EasyCodefClient Unit Test")
+@DisplayName("[Unit][Root] EasyCodefClient Test")
 public class EasyCodefClientTest {
 
 	@Test
@@ -25,8 +25,6 @@ public class EasyCodefClientTest {
 
 		String propsPublicKey = client.getPublicKey();
 
-		assertAll(
-			() -> assertEquals(publicKey, propsPublicKey)
-		);
+		assertEquals(publicKey, propsPublicKey);
 	}
 }

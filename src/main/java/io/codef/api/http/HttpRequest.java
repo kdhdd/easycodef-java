@@ -7,7 +7,7 @@ import java.util.Map;
  *
  * @version 2.0.0
  */
-public class CodefHttpRequest {
+public class HttpRequest {
 	private final String url;
 	private final Map<String, String> headers;
 	private final String body;
@@ -19,7 +19,7 @@ public class CodefHttpRequest {
 	 * @param headers HTTP 요청 헤더 (Map)
 	 * @param body    HTTP 요청 바디 (Payload)
 	 */
-	public CodefHttpRequest(String url, Map<String, String> headers, String body) {
+	public HttpRequest(String url, Map<String, String> headers, String body) {
 		this.url = url;
 		this.headers = headers;
 		this.body = body;

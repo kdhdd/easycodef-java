@@ -19,7 +19,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.util.JsonUtil;
 
-@DisplayName("[Util Layer] JsonUtil Unit Test")
+@DisplayName("[Unit][Util] JsonUtil Test")
 public class JsonUtilTest {
 
 	@Nested
@@ -43,8 +43,7 @@ public class JsonUtilTest {
 			Map<String, Object> map = new HashMap<>();
 			map.put("key", "value");
 
-			JsonNode jsonNode = JsonUtil.convertValue(map, new TypeReference<JsonNode>() {
-			});
+			JsonNode jsonNode = JsonUtil.convertValue(map, new TypeReference<JsonNode>() {});
 
 			assertThat(jsonNode).isInstanceOf(JsonNode.class);
 		}
@@ -72,9 +71,7 @@ public class JsonUtilTest {
 				() -> assertNull(JsonUtil.toJson(null)),
 				() -> assertNull(JsonUtil.fromJson(null, Map.class)),
 				() -> assertNull(JsonUtil.convertValue(null, Map.class)),
-				() -> assertNull(JsonUtil.convertValue(null, new TypeReference<Object>() {
-				}))
-			);
+				() -> assertNull(JsonUtil.convertValue(null, new TypeReference<Object>() {})));
 		}
 
 		@Test
@@ -85,8 +82,7 @@ public class JsonUtilTest {
 
 			CodefException exception = assertThrows(
 				CodefException.class,
-				() -> JsonUtil.toJson(map)
-			);
+				() -> JsonUtil.toJson(map));
 
 			assertEquals(CodefError.JSON_PARSE_ERROR, exception.getCodefError());
 		}
@@ -98,8 +94,7 @@ public class JsonUtilTest {
 
 			CodefException exception = assertThrows(
 				CodefException.class,
-				() -> JsonUtil.fromJson(invalidJson, JsonNode.class)
-			);
+				() -> JsonUtil.fromJson(invalidJson, JsonNode.class));
 
 			assertEquals(CodefError.JSON_PARSE_ERROR, exception.getCodefError());
 		}

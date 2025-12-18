@@ -10,7 +10,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.util.UrlUtil;
 
-@DisplayName("[Util Layer] UrlUtil Unit Test")
+@DisplayName("[Unit][Util] UrlUtil Test")
 public class UrlUtilTest {
 
 	@Nested

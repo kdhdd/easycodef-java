@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.http.CodefHttpClient;
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
-@DisplayName("[HTTP Layer] CodefHttpClient Unit Test")
+@DisplayName("[Unit][HTTP] CodefHttpClient Test")
 public class CodefHttpClientTest {
 
 	private CodefHttpClient httpClient;
@@ -26,7 +26,7 @@ public class CodefHttpClientTest {
 	@Test
 	@DisplayName("[Exception] URL 형식이 올바르지 않은 경우")
 	void createConnection_IOException() {
-		CodefHttpRequest request = HttpRequestBuilder.builder()
+		HttpRequest request = HttpRequestBuilder.builder()
 			.url("no-protocol-url")
 			.build();
 

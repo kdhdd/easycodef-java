@@ -16,7 +16,7 @@ import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.util.RsaUtil;
 
-@DisplayName("[Util Layer] RsaUtil Unit Test")
+@DisplayName("[Unit][Util] RsaUtil Test")
 public class RsaUtilTest {
 
 	private static String validPublicKey;
@@ -56,8 +56,7 @@ public class RsaUtilTest {
 		@DisplayName("[Exception] 잘못된 Public Key 입력 시 RSA_ENCRYPTION_ERROR 예외처리")
 		void encryptRsa_invalid_publicKey() {
 			String plainText = "Sensitive Data";
-			String invalidPublicKey =
-				Base64.getEncoder().encodeToString("invalid-key".getBytes());
+			String invalidPublicKey = Base64.getEncoder().encodeToString("invalid-key".getBytes());
 
 			CodefException exception = assertThrows(CodefException.class,
 				() -> RsaUtil.encryptRsa(plainText, invalidPublicKey));

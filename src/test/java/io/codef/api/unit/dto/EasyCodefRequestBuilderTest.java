@@ -14,7 +14,7 @@ import io.codef.api.dto.EasyCodefRequest;
 import io.codef.api.dto.EasyCodefRequestBuilder;
 import io.codef.api.error.CodefException;
 
-@DisplayName("[Dto Layer] EasyCodefRequestBuilder Unit Test")
+@DisplayName("[Unit][DTO] EasyCodefRequestBuilder Test")
 public class EasyCodefRequestBuilderTest {
 
 	@Nested
