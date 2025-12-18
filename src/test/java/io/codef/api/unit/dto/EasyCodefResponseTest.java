@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.codef.api.dto.EasyCodefResponse;
 
-@DisplayName("[Dto Layer] EasyCodefResponse Unit Test")
+@DisplayName("[Unit][DTO] EasyCodefResponse Test")
 public class EasyCodefResponseTest {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -27,8 +27,7 @@ public class EasyCodefResponseTest {
 	@BeforeEach
 	void setup() {
 		this.result = new EasyCodefResponse.Result(
-			"CF-00000", "", "성공", "test-transactionId"
-		);
+			"CF-00000", "", "성공", "test-transactionId");
 		this.data = Collections.singletonMap("data", "dataVal");
 		this.extraInfo = Collections.singletonMap("extraInfo", "extraVal");
 	}
@@ -46,8 +45,7 @@ public class EasyCodefResponseTest {
 				() -> assertNotNull(response),
 				() -> assertEquals(result, response.getResult()),
 				() -> assertEquals(data, response.getData()),
-				() -> assertEquals(extraInfo, response.getExtraInfo())
-			);
+				() -> assertEquals(extraInfo, response.getExtraInfo()));
 		}
 	}
 
@@ -66,8 +64,7 @@ public class EasyCodefResponseTest {
 			assertAll(
 				() -> assertTrue(jsonMap.containsKey("result")),
 				() -> assertTrue(jsonMap.containsKey("data")),
-				() -> assertTrue(jsonMap.containsKey("extraInfo"))
-			);
+				() -> assertTrue(jsonMap.containsKey("extraInfo")));
 		}
 
 		@Test
@@ -83,8 +80,7 @@ public class EasyCodefResponseTest {
 			assertAll(
 				() -> assertTrue(jsonMap.containsKey("result")),
 				() -> assertTrue(jsonMap.containsKey("data")),
-				() -> assertFalse(jsonMap.containsKey("extraInfo"))
-			);
+				() -> assertFalse(jsonMap.containsKey("extraInfo")));
 		}
 
 		@Test
@@ -99,8 +95,7 @@ public class EasyCodefResponseTest {
 				() -> assertNull(response.getExtraInfo()),
 				() -> assertTrue(jsonMap.containsKey("result")),
 				() -> assertTrue(jsonMap.containsKey("data")),
-				() -> assertFalse(jsonMap.containsKey("extraInfo"))
-			);
+				() -> assertFalse(jsonMap.containsKey("extraInfo")));
 		}
 	}
 }

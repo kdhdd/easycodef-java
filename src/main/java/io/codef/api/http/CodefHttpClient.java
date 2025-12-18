@@ -26,7 +26,7 @@ public class CodefHttpClient {
 	 * HTTP 요청 실행
 	 *
 	 * <p>
-	 *     {@link CodefHttpRequest} 정보를 기반으로 커넥션 설정, <br>
+	 *     {@link HttpRequest} 정보를 기반으로 커넥션 설정, <br>
 	 *     헤더 및 바디 데이터를 전송한 후 수신한 응답을 문자열로 반환
 	 * </p>
 	 *
@@ -35,7 +35,7 @@ public class CodefHttpClient {
 	 * @throws CodefException 타임아웃 발생 시 {@link CodefError#TIMEOUT_ERROR}, <br>
 	 * 입출력 오류 발생 시 {@link CodefError#IO_ERROR}
 	 */
-	public String execute(CodefHttpRequest request) {
+	public String execute(HttpRequest request) {
 		HttpURLConnection connection = null;
 
 		try {

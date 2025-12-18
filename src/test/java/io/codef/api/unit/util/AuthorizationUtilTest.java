@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import io.codef.api.util.AuthorizationUtil;
 
-@DisplayName("[Util Layer] AuthorizationUtil Unit Test")
+@DisplayName("[Unit][Util] AuthorizationUtil Test")
 public class AuthorizationUtilTest {
 
 	@Nested

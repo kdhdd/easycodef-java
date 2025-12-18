@@ -4,7 +4,7 @@ import static io.codef.api.constant.CodefConstant.*;
 
 import io.codef.api.dto.EasyCodefResponse;
 import io.codef.api.http.CodefHttpClient;
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
 /**
@@ -27,7 +27,7 @@ public class EasyCodefApiService extends EasyCodefService {
 	 * @return API 응답 결과 객체
 	 */
 	public EasyCodefResponse requestProduct(String urlPath, String bearerToken, String jsonBody) {
-		CodefHttpRequest request = HttpRequestBuilder.builder()
+		HttpRequest request = HttpRequestBuilder.builder()
 			.url(urlPath)
 			.header("Authorization", bearerToken)
 			.header("Content-Type", APPLICATION_JSON.getValue())

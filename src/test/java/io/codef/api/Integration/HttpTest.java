@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.codef.api.error.CodefError;
 import io.codef.api.error.CodefException;
 import io.codef.api.http.CodefHttpClient;
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 import io.codef.api.service.EasyCodefOAuthService;
 
@@ -47,7 +47,7 @@ public class HttpTest {
 
 			String jsonBody = mapper.writeValueAsString(body);
 
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url("https://postman-echo.com/post")
 				.header("Content-Type", "application/json")
 				.header("User-Agent",
@@ -63,7 +63,7 @@ public class HttpTest {
 		@Test
 		@DisplayName("[Success] body가 존재하지 않는 경우")
 		void execute_without_body() {
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url("https://postman-echo.com/post")
 				.header("Content-Type", "application/json")
 				.header("User-Agent",
@@ -78,7 +78,7 @@ public class HttpTest {
 		@Test
 		@DisplayName("[Success] body가 비어있는 값인 경우")
 		void execute_empty_body() {
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url("https://postman-echo.com/post")
 				.header("Content-Type", "application/json")
 				.header("User-Agent",
@@ -99,7 +99,7 @@ public class HttpTest {
 		@Test
 		@DisplayName("[Exception] 해당 주소(서버)에 연결할 수 없는 경우 IO_ERROR 예외처리")
 		void getResponse_IOException() {
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url("http://127.0.0.1:59999")
 				.build();
 
@@ -121,7 +121,7 @@ public class HttpTest {
 		@Test
 		@DisplayName("[Exception] UNAUTHORIZED가 아닌 HTTP 상태 에러코드(400, 403, 404, 500 등) INTERNAL_SERVER_ERROR 예외처리")
 		void getResponse_INTERNAL_SERVER_ERROR() {
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url("https://development.codef.io/not-exist-path")
 				.build();
 

@@ -66,9 +66,7 @@ public class EasyCodefTest {
 			long exp = extractExp(token);
 			long now = Instant.now().getEpochSecond();
 
-			assertAll(
-				() -> assertTrue(exp > now)
-			);
+			assertTrue(exp > now);
 		}
 
 		@Test
@@ -83,8 +81,7 @@ public class EasyCodefTest {
 
 			assertAll(
 				() -> assertTrue(newTokenExp >= oldTokenExp),
-				() -> assertTrue(newTokenExp > now)
-			);
+				() -> assertTrue(newTokenExp > now));
 		}
 
 		@Test
@@ -93,9 +90,7 @@ public class EasyCodefTest {
 			String firstToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
 			String secondToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
 
-			assertAll(
-				() -> assertEquals(firstToken, secondToken)
-			);
+			assertEquals(firstToken, secondToken);
 		}
 
 		@Test
@@ -104,9 +99,7 @@ public class EasyCodefTest {
 			String oldToken = easyCodef.requestToken(EasyCodefServiceType.DEMO);
 			String newToken = easyCodef.requestNewToken(EasyCodefServiceType.DEMO);
 
-			assertAll(
-				() -> assertNotEquals(oldToken, newToken)
-			);
+			assertNotEquals(oldToken, newToken);
 		}
 	}
 
@@ -125,9 +118,7 @@ public class EasyCodefTest {
 			CodefException exception = assertThrows(CodefException.class,
 				() -> easyCodef.requestCertification(productUrl, EasyCodefServiceType.DEMO, parameterMap));
 
-			assertAll(
-				() -> assertEquals(CodefError.INVALID_2WAY_INFO, exception.getCodefError())
-			);
+			assertEquals(CodefError.INVALID_2WAY_INFO, exception.getCodefError());
 		}
 	}
 
@@ -137,6 +128,6 @@ public class EasyCodefTest {
 
 		Map<?, ?> payloadMap = mapper.readValue(payloadJson, Map.class);
 
-		return ((Number) payloadMap.get("exp")).longValue();
+		return ((Number)payloadMap.get("exp")).longValue();
 	}
 }

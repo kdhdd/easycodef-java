@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 
-@DisplayName("[HTTP Layer] CodefHttpRequest Unit Test")
-public class CodefHttpRequestTest {
+@DisplayName("[Unit][HTTP] CodefHttpRequest Test")
+public class HttpRequestTest {
 
 	@Test
 	@DisplayName("[Success] CodefHttpRequest 생성자 테스트")
@@ -29,7 +29,7 @@ public class CodefHttpRequestTest {
 		bodyMap.put("param", "value");
 		String body = new ObjectMapper().writeValueAsString(bodyMap);
 
-		CodefHttpRequest request = new CodefHttpRequest(url, headers, body);
+		HttpRequest request = new HttpRequest(url, headers, body);
 
 		assertAll(
 			() -> assertNotNull(request),

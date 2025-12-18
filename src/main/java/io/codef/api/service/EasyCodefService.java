@@ -2,7 +2,7 @@ package io.codef.api.service;
 
 import io.codef.api.handler.ResponseHandler;
 import io.codef.api.http.CodefHttpClient;
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 
 /**
  * CODEF API 요청 전송 공통 서비스 추상 클래스
@@ -30,7 +30,7 @@ public abstract class EasyCodefService {
 	 * @param <T> 반환될 응답 타입
 	 * @return 파싱 및 변환된 API 응답 객체
 	 */
-	<T> T sendRequest(CodefHttpRequest request, Class<T> responseType) {
+	<T> T sendRequest(HttpRequest request, Class<T> responseType) {
 		String httpResponse = httpClient.execute(request);
 
 		return ResponseHandler.processResponse(httpResponse, responseType);

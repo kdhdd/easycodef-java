@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
-@DisplayName("[HTTP Layer] HttpRequestBuilder Unit Test")
+@DisplayName("[Unit][HTTP] HttpRequestBuilder Test")
 public class HttpRequestBuilderTest {
 
 	@Nested
@@ -34,7 +34,7 @@ public class HttpRequestBuilderTest {
 			String headerKey = "Content-Type";
 			String headerValue = "application/json";
 
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url(url)
 				.header(headerKey, headerValue)
 				.body(body)
@@ -55,7 +55,7 @@ public class HttpRequestBuilderTest {
 			String key2 = "Authorization";
 			String val2 = "Bearer token";
 
-			CodefHttpRequest request = HttpRequestBuilder.builder()
+			HttpRequest request = HttpRequestBuilder.builder()
 				.url("http://example.com")
 				.header(key1, val1)
 				.header(key2, val2)
@@ -72,7 +72,7 @@ public class HttpRequestBuilderTest {
 		@Test
 		@DisplayName("[Success] HttpRequestBuilder 값 설정 없이 build() 호출 시 상태 확인")
 		void build_success_without_HttpRequestBuilder() {
-			CodefHttpRequest request = HttpRequestBuilder.builder().build();
+			HttpRequest request = HttpRequestBuilder.builder().build();
 
 			Map<String, String> headers = request.getHeaders();
 

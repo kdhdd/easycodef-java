@@ -5,7 +5,7 @@ import static io.codef.api.constant.CodefPath.*;
 
 import io.codef.api.dto.EasyCodefTokenResponse;
 import io.codef.api.http.CodefHttpClient;
-import io.codef.api.http.CodefHttpRequest;
+import io.codef.api.http.HttpRequest;
 import io.codef.api.http.HttpRequestBuilder;
 
 /**
@@ -26,7 +26,7 @@ public class EasyCodefOAuthService extends EasyCodefService {
 	 * @return 발급된 토큰 정보를 포함한 응답 객체
 	 */
 	public EasyCodefTokenResponse requestToken(String basicToken) {
-		CodefHttpRequest request = HttpRequestBuilder.builder()
+		HttpRequest request = HttpRequestBuilder.builder()
 			.url(OAUTH_DOMAIN + GET_TOKEN)
 			.header("Authorization", basicToken)
 			.build();
